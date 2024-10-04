@@ -1,0 +1,20 @@
+{
+  "name": "servicetrove",
+  "version": "1.0.0",
+  "description": "## Overview This platform allows business owners to list their services, manage available time slots, and handle customer bookings. Customers can browse services, book appointments, and manage their bookings seamlessly. The platform provides both business owners and customers with the necessary tools to facilitate efficient service management.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --watch server.js",
+    "seed": "node DB/seed.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "mongoose": "^8.7.0",
+    "morgan": "^1.10.0"
+  }
+}
