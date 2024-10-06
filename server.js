@@ -18,6 +18,7 @@ const authRouter = require("./controllers/auth")
 
 // ! MIDDLEWEAR
 app.set("view engine", "ejs")
+app.use(express.urlencoded({ extended: true }));
 
 
 
@@ -33,7 +34,7 @@ app.get("/", (req, res) => {
 
 // Routes
 app.use("/auth", authRouter);
-
+app.use(morgan("dev"))
 
 
 

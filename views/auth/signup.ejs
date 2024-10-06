@@ -18,16 +18,16 @@
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
         </div>
+        <div>
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="confirmPassword" id="confirmPassword" name="confirmPassword" required>
+        </div>
         
         <div>
             <label for="role">Role:</label>
-            <select id="role" name="role" required>
-                <option value="<%= role %>"  selected><%= role %></option>
-                <% if (role === "Customer") { %>
-                    <option value="Business Owner">Business Owner</option>
-                <% } else { %>
-                    <option value="Customer">Customer</option>
-                <% } %>
+            <select id="role" name="role" required onchange="redirectToRole()">
+                <option value="Business Owner" <%= role === 'Business Owner' ? 'selected' : '' %>>Business Owner</option>
+                <option value="Customer" <%= role === 'Customer' ? 'selected' : '' %>>Customer</option>
             </select>
         </div>
         
@@ -36,5 +36,14 @@
         </div>
     </form>
     
+
+    <script>
+        // Function to cause a redirect
+        function redirectToRole() {
+            const selectedRole = document.getElementById('role').value;
+            // Redirect based on the selected value
+            window.location.href = `/auth/signup?role=${encodeURIComponent(selectedRole)}`;
+        }
+    </script>
 </body>
 </html>
