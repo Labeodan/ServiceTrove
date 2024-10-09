@@ -55,6 +55,11 @@
               </div>
 
             </form>
+
+             <!-- Delete Button -->
+             <form action="/services/<%= service._id %>?_method=DELETE" method="POST" class="mt-4">
+                <div class="d-grid">
+                  <button type="submit" class="btn btn-danger">Delete Service</button>
           </div>
         </div>
       </div>

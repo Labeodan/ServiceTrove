@@ -84,6 +84,17 @@ router.put("/:serviceId", async (req, res) => {
     }
 });
 
+// delete service
+router.delete("/:serviceId", async (req, res) => {
+    try {
+        await Service.findByIdAndDelete(req.params.serviceId);
+        res.redirect("/services"); // Redirect to the services list page after deletion
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Error deleting the service");
+    }
+});
+
 
 
 // get all the services created by a specific user
