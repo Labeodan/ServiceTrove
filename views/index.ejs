@@ -3,24 +3,25 @@
   <body>
   <%- include('./partials/nav') %>
 
-  <div class="container-md mb-3">
-    <div class="card">
-      <div class="card-body">
+  <div class="container-md mb-3 rounded-4 ">
+    <div class="card rounded-4 border border-black">
+      <div class="card-body rounded-4  mb-3 mt-3">
         <h5 class="card-title mb-2">Discover and Book Trusted Services with Ease</h5>
-        <hr>
+        <hr class="line-yellow">
         <p class="card-text">Connect with professionals, explore a variety of services, and secure your appointments effortlessly—all in one place.</p>
-        <a href="/services" class="card-link">Browse Services</a>
-        <a href="/services/new" class="card-link">List A Service</a>
+        <a href="/services" class="card-link btn-yellow">Browse Services</a>
+        <a href="/services/new" class="card-link btn-green ">List A Service</a>
       </div>
     </div>
   </div>
 
-  <hr>
+  <hr class=" border border-black">
 
   <div class="container-fluid mt-3 mb-3">
-    <div id="carouselExampleRide" class="carousel slide" data-bs-ride="true">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
+    <div id="carouselExampleRide" class="carousel slide border border-black rounded-4" data-bs-ride="carousel">
+      <div class="carousel-inner border border-black rounded-4">
+        <!-- First Slide (active) -->
+        <div class="carousel-item active ">
           <div class="card m-auto" style="width: 20rem;">
             <img src="/public/images/serviceimage.png" class="card-img-top" alt="serviceimage">
             <div class="card-body">
@@ -31,10 +32,12 @@
               <li class="list-group-item">Price</li>
             </ul>
             <div class="card-body">
-              <a href="/service/:serviceId" class="card-link">Card link</a>
+              <a href="/service/:serviceId" class="card-link btn-yellow">View Service</a>
             </div>
           </div>
         </div>
+      
+        <!-- Second Slide -->
         <div class="carousel-item">
           <div class="card m-auto" style="width: 20rem;">
             <img src="/public/images/serviceimage.png" class="card-img-top" alt="serviceimage">
@@ -46,10 +49,12 @@
               <li class="list-group-item">Price</li>
             </ul>
             <div class="card-body">
-              <a href="/service/:serviceId" class="card-link">Card link</a>
+              <a href="/service/:serviceId" class="card-link btn-yellow">View Service</a>
             </div>
           </div>
         </div>
+      
+        <!-- Third Slide -->
         <div class="carousel-item">
           <div class="card m-auto" style="width: 20rem;">
             <img src="/public/images/serviceimage.png" class="card-img-top" alt="serviceimage">
@@ -61,21 +66,25 @@
               <li class="list-group-item">Price</li>
             </ul>
             <div class="card-body">
-              <a href="/service/:serviceId" class="card-link">Card link</a>
+              <a href="/service/:serviceId" class="card-link btn-yellow">View Service</a>
             </div>
           </div>
         </div>
       </div>
+      
+      <!-- Carousel controls -->
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
       </button>
       <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
+        <!-- <span class="visually-hidden">Next</span> -->
       </button>
+      
     </div>
   </div>
+  
 
 
   <%- include('./partials/bootstrapJs') %>

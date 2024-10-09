@@ -1,57 +1,70 @@
 <%- include('../partials/head') %>
-  <body>
+<body>
   <%- include('../partials/nav') %>
-    <h1>Individual Service Page</h1>
-    <div>
-        <div>
-            <!-- Service Name and Price -->
-            <p><%= service.name %></p>
-            <p>$<%= service.price.toFixed(2) %></p>
-        </div>
 
-        <div>
-            <!-- Service Image -->
-            <img src="<%= service.image %>" alt="Service Image" style="max-width: 300px;">
-        </div>
+  <div class="container mt-5">
+    <!-- Service Heading -->
+    <h1 class="text-center mb-4"><%= service.name %></h1>
 
-        <!-- Service Description -->
-        <div><%= service.description %></div>
+    <!-- Service Content -->
+    <div class="row">
+      
+      <!-- Service Image -->
+      <div class="col-md-6 mb-4">
+        <img src="<%= service.image %>" alt="Service Image" class="img-fluid rounded">
+      </div>
 
-        <form action="/services/<%= service._id %>/bookings" method="post">
-            <div>
-                <!-- Available Time Slots -->
-                <p>Select a Time Slot</p>
+      <!-- Service Details -->
+      <div class="col-md-6">
+        <!-- Service Name and Price -->
+        <h3 class="text-primary">$<%= service.price.toFixed(2) %></h3>
+        <p><strong>Description:</strong> <%= service.description %></p>
+
+        <!-- Available Time Slots -->
+        <div class="mb-4">
+          <h5>Select a Time Slot</h5>
+          <% if (service.timeslots.length > 0) { %>
+            <form action="/services/<%= service._id %>/bookings" method="post">
+              <div class="form-check mb-2">
                 <% service.timeslots.forEach(timeslot => { %>
-                    <div>
-                        <input 
-                            type="checkbox" 
-                            id="<%= timeslot._id %>" 
-                            name="timeslotId" 
-                            value="<%= timeslot._id %>" 
-                            <% if (timeslot.isBooked) { %> disabled <% } %> 
-                        >
-                        <label for="<%= timeslot._id %>">
-                            <%= new Date(timeslot.date).toLocaleDateString() %> 
-                            <%= timeslot.time %> 
-                            <% if(timeslot.isBooked) { %>
-                                (Booked)
-                            <% } else { %>
-                                (Available)
-                            <% } %>
-                        </label>
-                    </div>
+                  <div class="form-check">
+                    <input 
+                      class="form-check-input" 
+                      type="checkbox" 
+                      id="<%= timeslot._id %>" 
+                      name="timeslotId" 
+                      value="<%= timeslot._id %>" 
+                      <% if (timeslot.isBooked) { %> disabled <% } %>>
+                    <label class="form-check-label" for="<%= timeslot._id %>">
+                      <%= new Date(timeslot.date).toLocaleDateString() %> 
+                      <%= timeslot.time %> 
+                      <% if (timeslot.isBooked) { %>
+                        <span class="badge bg-danger">Booked</span>
+                      <% } else { %>
+                        <span class="badge bg-success">Available</span>
+                      <% } %>
+                    </label>
+                  </div>
                 <% }) %>
-            </div>
+              </div>
+              <!-- Submit Button -->
+              <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary">Book Now</button>
+              </div>
+            </form>
+          <% } else { %>
+            <p>No available time slots at the moment.</p>
+          <% } %>
+        </div>
 
-            <div>
-                <!-- Navigation Buttons -->
-                <button type="button" onclick="window.location.href='/services'">Back</button>
-                <button type="submit">Book</button>
-            </div>
-        </form>
+        <!-- Back Button -->
+        <div class="d-grid gap-2">
+          <button class="btn btn-secondary" onclick="window.location.href='/services'">Back to Services</button>
+        </div>
+      </div>
     </div>
-    <%- include('../partials/bootstrapJs') %>
+  </div>
+
+  <%- include('../partials/bootstrapJs') %>
 </body>
-
-
 </html>

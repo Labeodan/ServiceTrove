@@ -12,7 +12,91 @@ hr {
     color: #000000;
 }
 
-nav {
-    height: 100px;
+.line-yellow {
+    color: #D1A93B;
 }
+.line-black {
+    color: #000000;
+}
+
+.navbar{
+    background-color: #f2f2f2 !important;
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* Ensures it stays above content */
+}
+
+.navbar-brand {
+    height: 100px; 
+    line-height: 100px; /* Aligns text verticall y*/
+}
+
+[type="button"] {
+    background-color: transparent !important;
+}
+
+[class="carousel-control-next-icon"]{
+    background-color: transparent !important;
+    color: #000000 !important;
+}
+
+[class="carousel-control-prev-icon"]{
+    background-color: transparent !important;
+}
+
+
+.btn-green {
+    background-color: #1B8499 !important;
+    border-radius: 15px !important;
+    padding: 5px 15px!important;
+    text-decoration: none;
+    color: #FFFFFF;
+    border: none;
+}
+.btn-yellow {
+    background-color: #D1A93B !important;
+    border-radius: 15px !important;
+    padding: 5px 10px !important;
+    text-decoration: none;
+    color: #FFFFFF;
+    border: none;
+}
+
+.link-green {
+    color: #1B8499 !important;
+    text-decoration: none;
+}
+
+.link-yellow {
+    color: #D1A93B !important;
+    text-decoration: none;
+}
+
+
+/* Make the container fluid on small screens */
+.container-custom {
+    width: 100%; /* Full width on xs and sm screens */
+    padding: 0 15px; /* Add some padding */
+  }
+  
+  @media (min-width: 768px) { /* md size (768px) and above */
+    .container-custom {
+      max-width: 800px; /* Set the fixed width */
+      margin: 0 auto; /* Center it */
+    }
+  }
+
+
+.mb-large {
+    margin-bottom: 75px;
+}
+
+.input-field{
+    width: 90% !important;
+}
+
+.no-border {
+    border: none !important; /* Remove border */
+    box-shadow: none; /* Remove any shadow if present */
+  }
 

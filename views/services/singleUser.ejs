@@ -1,10 +1,49 @@
 <%- include('../partials/head') %>
-  <body>
+<body>
   <%- include('../partials/nav') %>
-    <h1>Services Belonging to xyz</h1>
-    
 
+  <div class="container mt-5 mb-5">
+    <h1 class="text-center mb-4">My Services</h1>
 
-    <%- include('../partials/bootstrapJs') %>
+    <!-- Check if the user has any services -->
+    <% if (services.length > 0) { %>
+      <!-- Loop through services and display them in a grid -->
+      <div class="row">
+        <% services.forEach(service => { %>
+          <div class="col-md-4 mb-4">
+            <div class="card h-100">
+              <!-- Service Image -->
+              <img src="<%= service.image %>" class="card-img-top img-fluid" alt="Service Image" style="height: 200px; object-fit: cover;">
+
+              <!-- Service Details -->
+              <div class="card-body">
+                <h5 class="card-title"><%= service.name %></h5>
+                <p class="card-text">$<%= service.price.toFixed(2) %></p>
+                <p class="card-text text-muted"><%= service.description.substring(0, 50) %>...</p>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="card-footer d-flex justify-content-between">
+                <a href="/services/<%= service._id %>" class="btn btn-primary">View</a>
+                <a href="/services/<%= service._id %>/edit" class="btn btn-warning">Edit</a>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <!-- If no services are available -->
+      <div class="alert alert-info text-center" role="alert">
+        You have not added any services yet.
+      </div>
+    <% } %>
+
+    <!-- Button to Add a New Service -->
+    <div class="d-grid gap-2 mt-4">
+      <a href="/services/new" class="btn btn-success">Add New Service</a>
+    </div>
+  </div>
+
+  <%- include('../partials/bootstrapJs') %>
 </body>
 </html>

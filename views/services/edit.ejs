@@ -1,55 +1,57 @@
 <%- include('../partials/head') %>
 <body>
   <%- include('../partials/nav') %>
-  
+
   <div class="container mt-5 mb-5">
     <div class="w-50 m-auto mt-5 mb-5">
-        <h3 class="text-center border-top border-black">Create a New Service</h3>
+        <h3 class="text-center border-top border-black">Edit Service</h3>
     </div>
     
     <div class="row justify-content-center">
       <div class="col-md-8">
         <div class="card rounded-4">
           <div class="card-body border border-black rounded-4">
-            <form action="/services" method="post" >
-              
+            <form action="/services/<%= service._id %>?_method=PUT" method="post" enctype="multipart/form-data">
               <!-- Service Image -->
               <div class="mb-4">
                 <label for="image" class="form-label">Upload Image</label>
                 <input type="file" class="form-control rounded-4" id="image" name="image" accept="image/*">
+                <small class="text-muted">Leave blank to keep current image.</small>
               </div>
-              
+
               <!-- Service Name -->
               <div class="mb-4">
                 <label for="name" class="form-label">Service Name</label>
-                <input type="text" class="form-control rounded-4" id="name" name="name" placeholder="Enter service name" required>
+                <input type="text" class="form-control rounded-4" id="name" name="name" placeholder="Enter service name" value="<%= service.name %>" required>
               </div>
               
               <!-- Service Description -->
               <div class="mb-4">
                 <label for="description" class="form-label">Description</label>
-                <textarea class="form-control rounded-4" id="description" name="description" placeholder="Enter service description" rows="3" required></textarea>
+                <textarea class="form-control rounded-4" id="description" name="description" placeholder="Enter service description" rows="3" required><%= service.description %></textarea>
               </div>
 
               <!-- Service Price -->
               <div class="mb-4">
                 <label for="price" class="form-label">Price</label>
-                <input type="number" step="0.01" class="form-control rounded-4" id="price" name="price" placeholder="Enter service price" required>
+                <input type="number" step="0.01" class="form-control rounded-4" id="price" name="price" placeholder="Enter service price" value="<%= service.price %>" required>
               </div>
 
               <!-- Time Slots -->
               <div id="timeslotsContainer" class="mb-4">
                 <label>Time Slots</label>
-                <div class="timeslot mb-3 d-flex" id="timeslot-0">
-                  <input type="date" class="form-control rounded-4 me-2" name="timeslots[0][date]" required>
-                  <input type="time" class="form-control rounded-4" name="timeslots[0][time]" required>
-                </div>
+                <% service.timeslots.forEach((timeslot, index) => { %>
+                  <div class="timeslot mb-3 d-flex" id="timeslot-<%= index %>">
+                    <input type="date" class="form-control rounded-4 me-2" name="timeslots[<%= index %>][date]" value="<%= timeslot.date %>" required>
+                    <input type="time" class="form-control rounded-4" name="timeslots[<%= index %>][time]" value="<%= timeslot.time %>" required>
+                  </div>
+                <% }) %>
               </div>
               <button type="button" class="btn btn-secondary btn-sm mb-4" onclick="addTimeslot()">Add Another Time Slot</button>
 
               <!-- Submit Button -->
               <div class="d-grid">
-                <button type="submit" class="btn btn-primary btn-yellow">Create Service</button>
+                <button type="submit" class="btn btn-primary btn-yellow">Update Service</button>
               </div>
 
             </form>

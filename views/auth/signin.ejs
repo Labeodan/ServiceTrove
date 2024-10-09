@@ -1,31 +1,58 @@
 <%- include('../partials/head') %>
   <body>
   <%- include('../partials/nav') %>
-    <h2>User SignIn</h2>
-    <h3>As <%= role %></h3>
-    <form action="/auth/signin" method="POST">
-        <div>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
+    <div class="container mt-5">
+        <div class="w-50 m-auto mt-5 mb-5">
+            <h3 class="text-center border-top border-black">SignIn</h3>
         </div>
-        
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <!-- Sign In Form -->
+            <div class="card rounded-4">
+              <div class="card-body border border-black rounded-4">
+                <p class="card-title text-center mb-4 border-bottom border-black w-50 m-auto" >AS <%= role %></p>
+                <form action="/auth/signin" method="POST">
+
+                    <div class="mb-3 border border-black rounded-4">
+
+                        <!-- Username Field -->
+                        <div class="mb-4 border border-black mt-5 input-field m-auto rounded-4">
+                            <!-- <label for="username" class="form-label">Username</label> -->
+                            <input type="text" class="form-control rounded-4 text-center" id="username" name="username" placeholder="Enter your username" required>
+                        </div>
+                        
+                        <!-- Password Field -->
+                        <div class="mb-4 border border-black input-field m-auto rounded-4">
+                            <!-- <label for="password" class="form-label">Password</label> -->
+                            <input type="password" class="form-control rounded-4 text-center" id="password" name="password" placeholder="Enter your password" required>
+                        </div>
+                        
+                        <!-- Role Dropdown -->
+                        <div class="mb-5 border border-black input-field m-auto rounded-4">
+                            <!-- <label for="role" class="form-label">Role</label> -->
+                            <select id="role" name="role" class="w-100 no-border rounded-4 p-2 text-center" onchange="redirectToRole()">
+                                <option value="Business Owner" <%= role === 'Business Owner' ? 'selected' : '' %>>Business Owner</option>
+                                <option value="Customer" <%= role === 'Customer' ? 'selected' : '' %>>Customer</option>
+                            </select>
+                        </div>
+                        
+                    </div>
+                        <!-- Submit Button -->
+                  <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-green w-50 m-auto">Sign In</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
-        
-        <div>
-            <label for="role">Role:</label>
-            <select id="role" name="role" required onchange="redirectToRole()">
-                <option value="Business Owner" <%= role === 'Business Owner' ? 'selected' : '' %>>Business Owner</option>
-                <option value="Customer" <%= role === 'Customer' ? 'selected' : '' %>>Customer</option>
-            </select>
-        </div>
-        
-        <div>
-            <button type="submit">SignIn</button>
-        </div>
-    </form>
+        <div class="text-center mt-3"><p class="d-inline">Don’t have an account?</p> <a href=<%= `/auth/signup?role=${(role).split(" ").join("%20")}` %> class="d-inline link-yellow">SignUp</a></div>
+      </div>
+      
+
+
+
+
 
     <script>
         // Function to cause a redirect

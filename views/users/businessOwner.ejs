@@ -1,9 +1,45 @@
 <%- include('../partials/head') %>
   <body>
   <%- include('../partials/nav') %>
-    <h1>Business Owner - Landing Page</h1>
+    
+<!-- Hero Section -->
+<section class="text-center bg-light py-5">
+  <div class="container">
+    <h1 class="display-5">Grow Your Business with Us</h1>
+    <p class="lead">List your services and reach thousands of customers in your area.</p>
+    <a href="/services/new" class="btn btn-primary btn-lg mt-3">List Your Service</a>
+    <button class="btn btn-secondary btn-lg mt-3">
+      <a href="<%= `/services/created-by/${businessOwnerId}` %>" class="text-white text-decoration-none">View Your Services</a>
+    </button>
+  </div>
+</section>
 
-  <button><a href=<%= `/services/created-by/${businessOwnerId}` %>>View my services</a></button>
-  <button><a href="/services/new">Create Service</a></button>
+<!-- Features Section -->
+<section class="container py-5">
+  <div class="row text-center">
+    <div class="col-12 col-md-4">
+      <div class="mb-4">
+        <img src="https://via.placeholder.com/100" alt="Easy Setup" class="rounded-circle">
+      </div>
+      <h4>Easy Setup</h4>
+      <p>Create your business profile and start listing your services in minutes.</p>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="mb-4">
+        <img src="https://via.placeholder.com/100" alt="Manage Bookings" class="rounded-circle">
+      </div>
+      <h4>Manage Bookings</h4>
+      <p>Keep track of all your bookings and customer interactions from one place.</p>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="mb-4">
+        <img src="https://via.placeholder.com/100" alt="Boost Sales" class="rounded-circle">
+      </div>
+      <h4>Boost Sales</h4>
+      <p>Reach new customers and grow your business with our platform.</p>
+    </div>
+  </div>
+</section>
+  <%- include('../partials/bootstrapJs') %>
 </body>
 </html>

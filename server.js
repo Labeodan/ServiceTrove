@@ -4,20 +4,23 @@ const morgan = require("morgan")
 const mongoose = require("mongoose")
 require("dotenv/config")
 const port = process.env.PORT
-const authRouter = require("./controllers/auth")
-const serviceRouter = require("./controllers/services")
-const usersrouter = require("./controllers/users.js")
 const session = require("express-session");
 const MongoStore = require('connect-mongo');
+const methodOverride = require('method-override');
+
+
+
+
+// ! MIDDLEWEAR FUNCTIONS
 const passUserToView = require("./middleware/pass-user-to-view")
 const checkIfSignedIn = require("./middleware/checkIfSignedIn")
 
 
-// ! MIDDLEWEAR FUNCTIONS
-
-
 
 // ! CONTROLLERS
+const authRouter = require("./controllers/auth")
+const serviceRouter = require("./controllers/services")
+const usersrouter = require("./controllers/users.js")
 
 
 
@@ -26,6 +29,7 @@ const checkIfSignedIn = require("./middleware/checkIfSignedIn")
 // ! MIDDLEWEAR
 app.set("view engine", "ejs")
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
 app.use('/public', express.static('public'));
 app.use('/node_modules', express.static('node_modules'));
 app.use(morgan("dev"))

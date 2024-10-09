@@ -1,25 +1,26 @@
 <%- include('../partials/head') %>
-  <body>
+<body>
   <%- include('../partials/nav') %>
-    <h1>All Sevices Page</h1>
-    <h2>All Services</h2>
-    <% services.forEach(service => { %>
-     <div>
-        <div>
-            <img src="" alt="">
+
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">All Services</h2>
+    <div class="row">
+      <% services.forEach(service => { %>
+        <div class="col-md-4 mb-4">
+          <div class="card h-100">
+            <img src="<%= service.image %>" class="card-img-top" alt="<%= service.name %>">
+            <div class="card-body">
+              <h5 class="card-title"><%= service.name %></h5>
+              <p class="card-text"><%= service.description %></p>
+              <p class="card-text">Price: $<%= service.price %></p>
+              <a href="/services/<%= service._id %>" class="btn btn-primary">View Details</a>
+            </div>
+          </div>
         </div>
-        <div>
-            <p><%= service.name %></p>
-            <p><%= service.price %></p>
-        </div>
-        <div>
-            <p><%= service.description %></p>
-        </div>
-        <div>
-            <button><a href=<%= `/services/${service._id}`  %>>View Service</a></button>
-        </div>
-     </div>
-    <% }) %>
-    <%- include('../partials/bootstrapJs') %>
+      <% }) %>
+    </div>
+  </div>
+
+  <%- include('../partials/bootstrapJs') %>
 </body>
 </html>

@@ -1,20 +1,20 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom mb-3">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/">ServiceTrove</a>
-      <% if (user) { %>
-        <h4><%= user.username %></h4>
-      <% } %>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-            <% if (user) { %>
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href=<%= `/user/${(user.role).split(" ").join("")}` %>>Home</a>
-                </li>
-            <% } %>
-            <% if (user && user.role === "Customer") { %>
+<nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom border-black mb-3">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">ServiceTrove</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav ms-auto">
+        <!-- Navbar Links -->
+        <% if (user) { %>
+            <li class="nav-item">
+              <a class="nav-link active" href=<%= `/user/${(user.role).split(" ").join("")}` %>>Home</a>
+            </li>
+
+            <% if (user.role === "Customer") { %>
                 <li class="nav-item">
                   <a class="nav-link" href="/services">Browse Services</a>
                 </li>
@@ -23,21 +23,25 @@
                   <a class="nav-link" href="/services/new">List Service</a>
                 </li>
             <% } %>
-          <% if (!user) { %>
-            <li class="nav-item">
-              <a class="nav-link" href="/auth/signin?role=Customer">SignIn</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/auth/signup?role=Customer">SignUp</a>
-            </li>
-          <% } %>
 
-          <% if (user) { %>  
-            <li class="nav-item">
-              <a class="nav-link" href="/auth/signout">SignOut</a>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <%= user.username %>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li><a class="dropdown-item" href="/auth/signout">SignOut</a></li>
+              </ul>
             </li>
-          <% } %>
-        </ul>
+        <% } else { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/auth/signin?role=Customer">SignIn</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/auth/signup?role=Customer">SignUp</a>
+          </li>
+        <% } %>
+      </ul>
     </div>
-</div>
+  </div>
 </nav>
