@@ -5,6 +5,12 @@ const mongoose = require("mongoose")
 require("dotenv/config")
 const port = process.env.PORT
 const authRouter = require("./controllers/auth")
+const serviceRouter = require("./controllers/services")
+const usersrouter = require("./controllers/users.js")
+const session = require("express-session");
+const MongoStore = require('connect-mongo');
+const passUserToView = require("./middleware/pass-user-to-view")
+const checkIfSignedIn = require("./middleware/checkIfSignedIn")
 
 
 // ! MIDDLEWEAR FUNCTIONS
@@ -16,9 +22,22 @@ const authRouter = require("./controllers/auth")
 
 
 
+
 // ! MIDDLEWEAR
 app.set("view engine", "ejs")
 app.use(express.urlencoded({ extended: true }));
+app.use('/public', express.static('public'));
+app.use('/node_modules', express.static('node_modules'));
+app.use(morgan("dev"))
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    store: MongoStore.create({
+        mongoUrl: process.env.MONGODB_URI,
+    }),
+}))
+app.use(passUserToView);
 
 
 
@@ -34,7 +53,8 @@ app.get("/", (req, res) => {
 
 // Routes
 app.use("/auth", authRouter);
-app.use(morgan("dev"))
+app.use("/services", checkIfSignedIn, serviceRouter);
+app.use("/user", checkIfSignedIn, usersrouter)
 
 
 
