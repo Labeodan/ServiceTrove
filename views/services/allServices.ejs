@@ -1,0 +1,24 @@
+<%- include('../partials/head') %>
+  <body>
+  <%- include('../partials/nav') %>
+    <h1>All Sevices Page</h1>
+    <h2>All Services</h2>
+    <% services.forEach(service => { %>
+     <div>
+        <div>
+            <img src="" alt="">
+        </div>
+        <div>
+            <p><%= service.name %></p>
+            <p><%= service.price %></p>
+        </div>
+        <div>
+            <p><%= service.description %></p>
+        </div>
+        <div>
+            <button><a href=<%= `/services/${service._id}`  %>>View Service</a></button>
+        </div>
+     </div>
+    <% }) %>
+</body>
+</html>

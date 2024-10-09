@@ -1,0 +1,39 @@
+<%- include('../partials/head') %>
+  <body>
+  <%- include('../partials/nav') %>
+    <h2>User SignIn</h2>
+    <h3>As <%= role %></h3>
+    <form action="/auth/signin" method="POST">
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        
+        <div>
+            <label for="role">Role:</label>
+            <select id="role" name="role" required onchange="redirectToRole()">
+                <option value="Business Owner" <%= role === 'Business Owner' ? 'selected' : '' %>>Business Owner</option>
+                <option value="Customer" <%= role === 'Customer' ? 'selected' : '' %>>Customer</option>
+            </select>
+        </div>
+        
+        <div>
+            <button type="submit">SignIn</button>
+        </div>
+    </form>
+
+    <script>
+        // Function to cause a redirect
+        function redirectToRole() {
+            const selectedRole = document.getElementById('role').value;
+            // Redirect based on the selected value
+            window.location.href = `/auth/signin?role=${encodeURIComponent(selectedRole)}`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<%- include('../partials/head') %>
+  <body>
+  <%- include('../partials/nav') %>
+    <h1>Create a New Service</h1>
+    <form action="/services" method="post">
+        <!-- Service Image -->
+        <label for="image">Upload Image:</label>
+        <input type="file" id="image" name="image" accept="image/*"><br><br>
+
+        <!-- Service Name -->
+        <label for="name">Service Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <!-- Service Description -->
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required></textarea><br><br>
+
+        <!-- Service Price -->
+        <label for="price">Price:</label>
+        <input type="number" step="0.01" id="price" name="price" required><br><br>
+
+
+        <!-- Time Slots -->
+        <div id="timeslotsContainer">
+            <div class="timeslot" id="timeslot-0">
+                <label>Time Slot:</label>
+                <input type="date" name="timeslots[0][date]" required>
+                <input type="time" name="timeslots[0][time]" required>
+                <!-- <button type="button" onclick="removeTimeslot(0)">Delete</button> -->
+                <br><br>
+            </div>
+        </div>
+        <button type="button" onclick="addTimeslot()">Add Another Time Slot</button><br><br>
+        
+        <button type="submit">Create Service</button>
+    </form>
+</body>
+</html>

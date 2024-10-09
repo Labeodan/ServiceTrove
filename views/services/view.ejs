@@ -1,0 +1,56 @@
+<%- include('../partials/head') %>
+  <body>
+  <%- include('../partials/nav') %>
+    <h1>Individual Service Page</h1>
+    <div>
+        <div>
+            <!-- Service Name and Price -->
+            <p><%= service.name %></p>
+            <p>$<%= service.price.toFixed(2) %></p>
+        </div>
+
+        <div>
+            <!-- Service Image -->
+            <img src="<%= service.image %>" alt="Service Image" style="max-width: 300px;">
+        </div>
+
+        <!-- Service Description -->
+        <div><%= service.description %></div>
+
+        <form action="/services/<%= service._id %>/bookings" method="post">
+            <div>
+                <!-- Available Time Slots -->
+                <p>Select a Time Slot</p>
+                <% service.timeslots.forEach(timeslot => { %>
+                    <div>
+                        <input 
+                            type="checkbox" 
+                            id="<%= timeslot._id %>" 
+                            name="timeslotId" 
+                            value="<%= timeslot._id %>" 
+                            <% if (timeslot.isBooked) { %> disabled <% } %> 
+                        >
+                        <label for="<%= timeslot._id %>">
+                            <%= new Date(timeslot.date).toLocaleDateString() %> 
+                            <%= timeslot.time %> 
+                            <% if(timeslot.isBooked) { %>
+                                (Booked)
+                            <% } else { %>
+                                (Available)
+                            <% } %>
+                        </label>
+                    </div>
+                <% }) %>
+            </div>
+
+            <div>
+                <!-- Navigation Buttons -->
+                <button type="button" onclick="window.location.href='/services'">Back</button>
+                <button type="submit">Book</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+
+</html>

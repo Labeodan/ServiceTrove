@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">ServiceTrove</a>
+      <% if (user) { %>
+        <h4><%= user.username %></h4>
+      <% } %>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <% if (user) { %>
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href=<%= `/user/${(user.role).split(" ").join("")}` %>>Home</a>
+                </li>
+            <% } %>
+            <% if (user && user.role === "Customer") { %>
+                <li class="nav-item">
+                  <a class="nav-link" href="/services">Browse Services</a>
+                </li>
+            <% } else { %>
+                <li class="nav-item">
+                  <a class="nav-link" href="/services/new">List Service</a>
+                </li>
+            <% } %>
+          <% if (!user) { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/auth/signin?role=Customer">SignIn</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/auth/signup?role=Customer">SignUp</a>
+            </li>
+          <% } %>
+
+          <% if (user) { %>  
+            <li class="nav-item">
+              <a class="nav-link" href="/auth/signout">SignOut</a>
+            </li>
+          <% } %>
+        </ul>
+    </div>
+</div>
+</nav>

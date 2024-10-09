@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+<%- include('../partials/head') %>
+  <body>
+  <%- include('../partials/nav') %>
     <h1>Business Owner - Landing Page</h1>
 
+  <button><a href=<%= `/services/created-by/${businessOwnerId}` %>>View my services</a></button>
+  <button><a href="/services/new">Create Service</a></button>
 </body>
 </html>
