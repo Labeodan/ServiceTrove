@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require("../models/users");
 const Service = require("../models/services");
 const { checkIfBusinessOwner, checkIfCustomer } = require("../middleware/checkRole");
+const upload = require("../middleware/upload")
 
 // middleware
 const compareIdOfOwner = (req, res, next) => {
@@ -63,13 +64,17 @@ router.get("/:serviceId/edit", checkIfBusinessOwner, async (req, res) => {
 })
 
 // PUT request to update the service //! Business Owner But still edit which business owner can edit
-router.put("/:serviceId", checkIfBusinessOwner, async (req, res) => {
+router.put("/:serviceId", checkIfBusinessOwner, upload.single("serviceImage"), async (req, res) => {
     try {
         // Extract the service ID from the route parameters
         const  serviceId  = req.params.serviceId
 
+        if (req.file) {
+            req.body.image = req.file.path            
+        }
+
         // Extract form data from the request body
-        const { name, description, price, timeslots } = req.body;
+        const { name, description, price, timeslots, image } = req.body;
         console.log(req.body)
         
         // If you're handling file uploads (like images), you can handle that here
@@ -77,7 +82,8 @@ router.put("/:serviceId", checkIfBusinessOwner, async (req, res) => {
             name,
             description,
             price,
-            timeslots // Assuming timeslots come in a suitable format
+            timeslots, // Assuming timeslots come in a suitable format
+            image
         };
 
         // Find the service by ID and update it with the new data
@@ -122,8 +128,12 @@ router.get("/created-by/:userId", checkIfBusinessOwner, compareIdOfOwner, async 
 
 
 // create a new service //! Business Owner 
-router.post("/", checkIfBusinessOwner, async (req, res) => {
+router.post("/", checkIfBusinessOwner, upload.single("serviceImage"), async (req, res) => {
     try {
+
+        if (req.file) {
+            req.body.image = req.file.path            
+        }
         console.log(req.body)
         req.body.serviceProvider = req.session.user._id
         const service = await Service.create(req.body)

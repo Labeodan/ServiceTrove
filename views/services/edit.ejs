@@ -11,11 +11,11 @@
       <div class="col-md-8">
         <div class="card rounded-4">
           <div class="card-body border border-black rounded-4">
-            <form  method="POST" action="/services/<%= service._id %>?_method=PUT">
+            <form  method="POST" action="/services/<%= service._id %>?_method=PUT" enctype="multipart/form-data">
               <!-- Service Image -->
               <div class="mb-4">
-                <label for="image" class="form-label">Upload Image</label>
-                <input type="file" class="form-control rounded-4" id="image" name="image" accept="image/*">
+                <label for="serviceImage" class="form-label">Upload Image</label>
+                <input type="file" class="form-control rounded-4" id="serviceImage" name="serviceImage" accept="image/png, image/jpeg, image/jpg">
                 <small class="text-muted">Leave blank to keep current image.</small>
               </div>
 
@@ -42,7 +42,7 @@
                 <label>Time Slots</label>
                 <% service.timeslots.forEach((timeslot, index) => { %>
                   <div class="timeslot mb-3 d-flex" id="timeslot-<%= index %>">
-                    <input type="date" class="form-control rounded-4 me-2" name="timeslots[<%= index %>][date]" value="<%= timeslot.date %>" required>
+                    <input type="date" class="form-control rounded-4 me-2" name="timeslots[<%= index %>][date]" value="<%= new Date(timeslot.date).toISOString().slice(0, 10) %>" required>
                     <input type="time" class="form-control rounded-4" name="timeslots[<%= index %>][time]" value="<%= timeslot.time %>" required>
                   </div>
                 <% }) %>
