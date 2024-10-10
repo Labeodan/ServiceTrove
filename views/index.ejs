@@ -9,8 +9,12 @@
         <h5 class="card-title mb-2">Discover and Book Trusted Services with Ease</h5>
         <hr class="line-yellow">
         <p class="card-text">Connect with professionals, explore a variety of services, and secure your appointments effortlessly—all in one place.</p>
-        <a href="/services" class="card-link btn-yellow">Browse Services</a>
-        <a href="/services/new" class="card-link btn-green ">List A Service</a>
+        <% if (!user || user && user.role === "Customer") { %>
+          <a href="/services" class="card-link btn-yellow">Browse Services</a>
+        <% } %>
+        <% if (!user || user && user.role === "Business Owner") { %>
+          <a href="/services/new" class="card-link btn-green ">List A Service</a>
+        <% } %>
       </div>
     </div>
   </div>
@@ -19,71 +23,45 @@
 
   <div class="container-fluid mt-3 mb-3">
     <div id="carouselExampleRide" class="carousel slide border border-black rounded-4" data-bs-ride="carousel">
-      <div class="carousel-inner border border-black rounded-4">
-        <!-- First Slide (active) -->
-        <div class="carousel-item active ">
-          <div class="card m-auto" style="width: 20rem;">
-            <img src="/public/images/serviceimage.png" class="card-img-top" alt="serviceimage">
-            <div class="card-body">
-              <h5 class="card-title">Name</h5>
-              <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos labore recusandae libero culpa, rem saepe?</p>
-            </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">Price</li>
-            </ul>
-            <div class="card-body">
-              <a href="/service/:serviceId" class="card-link btn-yellow">View Service</a>
-            </div>
-          </div>
+        <div class="carousel-inner border border-black rounded-4">
+
+            <% services.forEach((service, index) => { %>
+                <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                    <div class="card mx-auto" style="width: 20rem; border-radius: 1rem; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                      <img src="<%= service.image ? service.image : 'https://placehold.co/600x400/png' %>" class="card-img-top img-fluid rounded-top-4" alt="Service Image" style="height: 200px; object-fit: cover;">
+                        <div class="card-body text-center">
+                            <h5 class="card-title"><%= service.name %></h5>
+                            <p class="card-text text-muted"><%= service.description %></p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>Price:</strong> <span class="text-muted"><%= service.price %></span>
+                            </li>
+                        </ul>
+                        <div class="card-body text-center" <% if (user &&  user.role !== "Customer") { %>
+                         hidden
+                        <% } %>>
+                            <a href="/services/<%= service._id %>" class="btn btn-yellow btn-block">View Service</a>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+
         </div>
-      
-        <!-- Second Slide -->
-        <div class="carousel-item">
-          <div class="card m-auto" style="width: 20rem;">
-            <img src="/public/images/serviceimage.png" class="card-img-top" alt="serviceimage">
-            <div class="card-body">
-              <h5 class="card-title">Name</h5>
-              <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos labore recusandae libero culpa, rem saepe?</p>
-            </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">Price</li>
-            </ul>
-            <div class="card-body">
-              <a href="/service/:serviceId" class="card-link btn-yellow">View Service</a>
-            </div>
-          </div>
-        </div>
-      
-        <!-- Third Slide -->
-        <div class="carousel-item">
-          <div class="card m-auto" style="width: 20rem;">
-            <img src="/public/images/serviceimage.png" class="card-img-top" alt="serviceimage">
-            <div class="card-body">
-              <h5 class="card-title">Name</h5>
-              <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos labore recusandae libero culpa, rem saepe?</p>
-            </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">Price</li>
-            </ul>
-            <div class="card-body">
-              <a href="/service/:serviceId" class="card-link btn-yellow">View Service</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Carousel controls -->
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <!-- <span class="visually-hidden">Next</span> -->
-      </button>
-      
+
+        <!-- Carousel controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
-  </div>
+</div>
+
+
   
 
 

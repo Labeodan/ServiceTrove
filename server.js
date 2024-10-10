@@ -7,6 +7,7 @@ const port = process.env.PORT
 const session = require("express-session");
 const MongoStore = require('connect-mongo');
 const methodOverride = require('method-override')
+const Service = require("./models/services.js")
 
 
 
@@ -43,16 +44,26 @@ app.use(session({
 }))
 app.use(passUserToView);
 
-
+const handleError = (res, error, message = "Internal Server Error", statusCode = 500) => {
+    console.error(error);
+    res.status(statusCode).render("error", { message }); // Assuming you have an 'error.ejs' page
+};
 
 
 
 // ! ROUTE HANDLERS
 
 // Landing Page
-app.get("/", (req, res) => {
-    res.status(200).render("index")
-})
+app.get("/", async (req, res) => {
+    try {
+        const services = await Service.find();
+        // Slice the services array to get only the first 4 services
+        const limitedServices = services.slice(0, 4);
+        res.status(200).render("index", { services: limitedServices });
+    } catch (error) {
+        handleError(res, error);
+    }
+});
 
 
 // Routes

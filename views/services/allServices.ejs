@@ -7,13 +7,13 @@
     <div class="row">
       <% services.forEach(service => { %>
         <div class="col-md-4 mb-4">
-          <div class="card h-100">
-            <img src="<%= service.image %>" class="card-img-top" alt="<%= service.name %>">
-            <div class="card-body">
+          <div class="card h-100 border-black rounded-4">
+            <img src="<%= service.image ? service.image : 'https://placehold.co/600x400/png' %>" class="card-img-top img-fluid rounded-top-4" alt="Service Image" style="height: 200px; object-fit: cover;">
+            <div class="card-body rounded-bottom-4">
               <h5 class="card-title"><%= service.name %></h5>
               <p class="card-text"><%= service.description %></p>
               <p class="card-text">Price: $<%= service.price %></p>
-              <a href="/services/<%= service._id %>" class="btn btn-primary">View Details</a>
+              <a href="/services/<%= service._id %>" class="btn btn-green">View Details</a>
             </div>
           </div>
         </div>

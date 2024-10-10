@@ -2,20 +2,20 @@
 <body>
   <%- include('../partials/nav') %>
 
-  <div class="container mt-5">
+  <div class="container mt-5 mb-5 ">
     <!-- Service Heading -->
-    <h1 class="text-center mb-4"><%= service.name %></h1>
+    <h1 class="text-center mb-4 border-bottom border-black w-50 m-auto"><%= service.name %></h1>
 
     <!-- Service Content -->
-    <div class="row">
+    <div class="row border border-black rounded-4 mx-1">
       
       <!-- Service Image -->
-      <div class="col-md-6 mb-4">
-        <img src="<%= service.image %>" alt="Service Image" class="img-fluid rounded">
+      <div class="col-md-6 mb-4 rounded-top-4">
+        <img src="<%= service.image ? service.image : 'https://placehold.co/600x400/png' %>" class="card-img-top img-fluid rounded-top-4" alt="Service Image" style="height: 200px; object-fit: cover;">
       </div>
 
       <!-- Service Details -->
-      <div class="col-md-6">
+      <div class="col-md-6 rounded-bottom-4">
         <!-- Service Name and Price -->
         <h3 class="text-primary">$<%= service.price.toFixed(2) %></h3>
         <p><strong>Description:</strong> <%= service.description %></p>
@@ -24,7 +24,8 @@
         <div class="mb-4">
           <h5>Select a Time Slot</h5>
           <% if (service.timeslots.length > 0) { %>
-            <form action="/services/<%= service._id %>/bookings" method="post">
+            <form action="#" method="post">
+            <!-- <form action="/services/<%= service._id %>/bookings" method="post"> -->
               <div class="form-check mb-2">
                 <% service.timeslots.forEach(timeslot => { %>
                   <div class="form-check">
@@ -49,7 +50,7 @@
               </div>
               <!-- Submit Button -->
               <div class="d-grid gap-2">
-                <button type="submit" class="btn btn-primary">Book Now</button>
+                <button type="submit" class="btn btn-yellow">Book Now</button>
               </div>
             </form>
           <% } else { %>
@@ -58,8 +59,8 @@
         </div>
 
         <!-- Back Button -->
-        <div class="d-grid gap-2">
-          <button class="btn btn-secondary" onclick="window.location.href='/services'">Back to Services</button>
+        <div class="d-grid gap-2 mb-2">
+          <a class="btn btn-green" href='/services'>Back to Services</a>
         </div>
       </div>
     </div>

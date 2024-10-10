@@ -3,14 +3,12 @@
   <%- include('../partials/nav') %>
     
 <!-- Hero Section -->
-<section class="text-center bg-light py-5">
+<section class="text-center py-5">
   <div class="container">
     <h1 class="display-5">Grow Your Business with Us</h1>
     <p class="lead">List your services and reach thousands of customers in your area.</p>
-    <a href="/services/new" class="btn btn-primary btn-lg mt-3">List Your Service</a>
-    <button class="btn btn-secondary btn-lg mt-3">
-      <a href="<%= `/services/created-by/${businessOwnerId}` %>" class="text-white text-decoration-none">View Your Services</a>
-    </button>
+    <a href="/services/new" class="btn btn-yellow btn-lg mt-3">List Your Service</a>
+      <a href="<%= `/services/created-by/${businessOwnerId}` %>" class="btn btn-green btn-lg mt-3">View Your Services</a>
   </div>
 </section>
 
