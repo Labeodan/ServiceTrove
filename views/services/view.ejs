@@ -25,7 +25,7 @@
           <h5>Select a Time Slot</h5>
           <% if (service.timeslots.length > 0) { %>
             <form action="#" method="post">
-            <!-- <form action="/services/<%= service._id %>/bookings" method="post"> -->
+            <!-- <form action="/services/<%= service._id %> </bookings" method="post"> -->
               <div class="form-check mb-2">
                 <% service.timeslots.forEach(timeslot => { %>
                   <div class="form-check">
@@ -50,7 +50,7 @@
               </div>
               <!-- Submit Button -->
               <div class="d-grid gap-2">
-                <button type="submit" class="btn btn-yellow">Book Now</button>
+                <!-- <button type="submit" class="btn btn-yellow">Book Now</button> -->
               </div>
             </form>
           <% } else { %>
@@ -60,7 +60,13 @@
 
         <!-- Back Button -->
         <div class="d-grid gap-2 mb-2">
-          <a class="btn btn-green" href='/services'>Back to Services</a>
+          <% if (user && user.role === "Customer") { %>
+            <a class="btn btn-green" href='/services'>Back to Services</a>
+          <% } %>
+
+          <% if (user && user.role === "Business Owner") { %>
+            <a class="btn btn-green" href='/services/created-by/<%= user._id %>'>Back to Your Services</a>
+          <% } %>
         </div>
       </div>
     </div>
