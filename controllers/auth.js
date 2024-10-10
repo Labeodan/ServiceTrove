@@ -4,12 +4,18 @@ const bcrypt = require("bcrypt");
 const User = require("../models/users");
 const session = require("express-session");
 
+// middleware
+const checkUser = (req, res, next) => {
+    if(req.session.user) {
+        return res.redirect("/")
+    }
 
-
+    next()
+}
 
 
 // SIGNUP PAGE
-router.get("/signup", (req, res, next) => {
+router.get("/signup", checkUser, (req, res, next) => {
     try {
         const role = req.query.role
 
@@ -68,7 +74,7 @@ router.post("/signup", async (req, res, next) => {
 
 
 // Signin form
-router.get("/signin", (req, res, next) => {
+router.get("/signin", checkUser, (req, res, next) => {
     try {
         const role = req.query.role
 

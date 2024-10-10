@@ -1,11 +1,21 @@
-const checkRole = (req, res, next) => {
-    if(req.session.role === "Business Owner") {
-        res.redirect("user/businessOwner")
-    } else if (req.session.role === "Customer") {
-        res.redirect("user/customer")
+const checkIfCustomer = (req, res, next) => {
+    if (req.session.user && req.session.user.role !== "Customer"){
+            return res.redirect(`/user/${(req.session.user.role).split(" ").join("")}`)
     } else {
-        next()
+        return next()
     }
 }
 
-module.exports = checkRole;
+
+const checkIfBusinessOwner = ( req, res, next) => {
+    if (req.session.user && req.session.user.role !== "Business Owner"){
+            return res.redirect(`/user/${(req.session.user.role).split(" ").join("")}`)
+    } else {
+        return next()
+    }
+}
+
+module.exports = {
+    checkIfCustomer,
+    checkIfBusinessOwner
+};

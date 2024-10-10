@@ -11,7 +11,7 @@
       <div class="col-md-8">
         <div class="card rounded-4">
           <div class="card-body border border-black rounded-4">
-            <form action="/services/<%= service._id %>?_method=PUT" method="post" enctype="multipart/form-data">
+            <form  method="POST" action="/services/<%= service._id %>?_method=PUT">
               <!-- Service Image -->
               <div class="mb-4">
                 <label for="image" class="form-label">Upload Image</label>

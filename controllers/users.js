@@ -2,23 +2,6 @@ const express = require("express")
 const router = express.Router();
 
 
-// const checkRoleCustomer = (req, res, next) => {
-//     if (req.session.role !== "Customer") {
-//         res.status(401).redirect("/auth/signin?role=Customer")
-//     } 
-
-//     next()
-// }
-
-// const checkRoleBusinessOwner = (req, res, next) => {
-//     if (req.session.role !== "Business Owner") {
-//         res.status(401).redirect("/auth/signin?role=Business%20Owner")
-//     } 
-
-//     next()
-// }
-
-
 
 
 // Customer Landing Page

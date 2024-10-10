@@ -4,15 +4,13 @@ const Service = require('../models/services');
 const userSeed = require('./users');
 const serviceSeed = require('./services');
 require("dotenv/config")
-// Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => console.log('MongoDB connected'))
-  .catch(err => console.error('MongoDB connection error:', err));
 
 const seedDatabase = async () => {
     try {
+        
+        await mongoose.connect(process.env.MONGODB_URI)
+        console.log('MongoDB connected')
+
         // Clear existing data
         await User.deleteMany({});
         await Service.deleteMany({});
@@ -32,7 +30,8 @@ const seedDatabase = async () => {
     } catch (error) {
         console.error('Error seeding database:', error);
     } finally {
-        mongoose.connection.close();
+        await mongoose.disconnect(process.env.MONGODB_URI)
+        console.log('MongoDB disconnected')
     }
 };
 

@@ -1,12 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/users");
-const Service = require("../models/services")
+const Service = require("../models/services");
+const { checkIfBusinessOwner, checkIfCustomer } = require("../middleware/checkRole");
 
+// middleware
+const compareIdOfOwner = (req, res, next) => {
+    if(req.session.user._id !== req.params.userId) {
+        console.log(req.session.user._id)
+        console.log(req.params.serviceId)
+        return res.redirect("/")
+    }
+    next()
+}
 
-
-// get all services
-router.get("/", async (req, res) => {
+// get all services 
+router.get("/", checkIfCustomer, async (req, res) => {
     try {
         const services = await Service.find()
         console.log(services)
@@ -21,16 +30,16 @@ router.get("/", async (req, res) => {
 })
 
 
-// create a new service page
-router.get("/new", (req, res) => {
+// create a new service page //!Business Owner
+router.get("/new", checkIfBusinessOwner, (req, res) => {
     return res.status(200).render("services/create")
 })
 
-// get a specific service
+// get a specific service //! Both roles can view, just edit what each one can do
 router.get("/:serviceId", async (req, res) => {
     try {
         const service = await Service.findById(req.params.serviceId)
-        console.log(service)
+        // console.log(service)
         
         res.status(200).render("services/view", {
             service: service
@@ -41,8 +50,8 @@ router.get("/:serviceId", async (req, res) => {
     }
 })
 
-// get the edit route
-router.get("/:serviceId/edit", async (req, res) => {
+// get the edit route //! Business Owner But still edit which business owner can edit
+router.get("/:serviceId/edit", checkIfBusinessOwner, async (req, res) => {
     try {
         const service = await Service.findById(req.params.serviceId)
         res.status(200).render("services/edit", {
@@ -53,8 +62,8 @@ router.get("/:serviceId/edit", async (req, res) => {
     }
 })
 
-// PUT request to update the service
-router.put("/:serviceId", async (req, res) => {
+// PUT request to update the service //! Business Owner But still edit which business owner can edit
+router.put("/:serviceId", checkIfBusinessOwner, async (req, res) => {
     try {
         // Extract the service ID from the route parameters
         const  serviceId  = req.params.serviceId
@@ -84,8 +93,8 @@ router.put("/:serviceId", async (req, res) => {
     }
 });
 
-// delete service
-router.delete("/:serviceId", async (req, res) => {
+// delete service //! Business Owner But still edit which business owner can edit
+router.delete("/:serviceId", checkIfBusinessOwner, async (req, res) => {
     try {
         await Service.findByIdAndDelete(req.params.serviceId);
         res.redirect("/services"); // Redirect to the services list page after deletion
@@ -97,8 +106,8 @@ router.delete("/:serviceId", async (req, res) => {
 
 
 
-// get all the services created by a specific user
-router.get("/created-by/:userId", async (req,res) => {
+// get all the services created by a specific user //! Business Owner 
+router.get("/created-by/:userId", checkIfBusinessOwner, compareIdOfOwner, async (req,res) => {
     try {
         const services = await Service.find({ serviceProvider: req.params.userId });
         res.status(200).render("services/singleUser", {
@@ -112,8 +121,8 @@ router.get("/created-by/:userId", async (req,res) => {
 
 
 
-// create a new service
-router.post("/", async (req, res) => {
+// create a new service //! Business Owner 
+router.post("/", checkIfBusinessOwner, async (req, res) => {
     try {
         console.log(req.body)
         req.body.serviceProvider = req.session.user._id
