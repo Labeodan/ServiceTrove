@@ -13,6 +13,11 @@ const checkUser = (req, res, next) => {
     next()
 }
 
+const handleError = (res, error, message = "Internal Server Error", statusCode = 500) => {
+    console.error(error);
+    res.status(statusCode).render("error", { message }); // Assuming you have an 'error.ejs' page
+};
+
 
 // SIGNUP PAGE
 router.get("/signup", checkUser, (req, res, next) => {
@@ -66,8 +71,7 @@ router.post("/signup", async (req, res, next) => {
 
 
     } catch (error) {
-        console.log(error)
-        return res.sendStatus(500)
+        handleError(res, error);
     }
 })
 
@@ -140,15 +144,18 @@ router.post("/signin", async (req, res, next) => {
 
     } catch (error) {
         console.log(error)
-        return res.sendStatus(500)
+        handleError(res, error);
     }
 })
 
 
-router.get("/signout", async (req, res) => {
-    req.session.destroy();
-
-    res.status(200).redirect("/")
+router.get("/signout", (req, res) => {
+    try {
+        req.session.destroy();
+        res.status(200).redirect("/")
+    } catch (error) {
+        handleError(res, error);
+    }
 })
 
 
