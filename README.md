@@ -1,69 +1,114 @@
 # ServiceTrove
 
-## Overview
-This platform allows business owners to list their services, manage available time slots, and handle customer bookings. Customers can browse services, book appointments, and manage their bookings seamlessly. The platform provides both business owners and customers with the necessary tools to facilitate efficient service management.
+ServiceTrove is a platform that connects **Business Owners** with **Customers** by allowing business owners to list their services, available timeslots, and manage bookings, while customers can browse services, book appointments, and track their engagements.
+
+## Screenshots
+
+### Homepage
+![Homepage](./public/images/homepage.png)
+
+### Service Listing
+![Service Listing](./public/images/listservice.png)
+
+### Services
+![Service Details](./public/images/viewservices.png)
+
+### View Service
+![Booking Page](./public/images/viewservice.png)
+
 
 ## Features
 
-### Business Owner User Stories
+### For Business Owners:
+- **Service Listing:** Create, update, and manage services with descriptions, pricing, and images.
+- **Timeslot Management:** Add and manage available times for customers to book.
+- **Customer Overview:** View customers who have booked services and their respective appointment times.
 
-#### Service Listing
-- **Create Service Listing:**  
-  As a business owner, I want to create a service listing so that I can showcase the services I offer to potential customers.
-  
-- **View Service Listings:**  
-  As a business owner, I want to view my existing service listings so that I can ensure the details are accurate and up-to-date.
-  
-- **Edit Service Listing:**  
-  As a business owner, I want to edit my service listings so that I can update the description, pricing, or availability when needed.
-  
-- **Delete Service Listing:**  
-  As a business owner, I want to delete service listings that are no longer relevant so that my available services are current.
+### For Customers:
+- **Service Browsing:** Explore available services from various business owners.
+- **Appointment Booking:** Book services based on available times and make payments (if applicable).
+- **Booking Management:** Track and manage upcoming appointments.
 
-#### Timeslot Management
-- **Set Available Time Slots:**  
-  As a business owner, I want to set available time slots for my services so that customers can book appointments during my working hours.
-  
-- **Update Available Time Slots:**  
-  As a business owner, I want to update my available time slots so that I can adjust my schedule based on availability or changes in my business operations.
-  
-- **Remove Time Slots:**  
-  As a business owner, I want to remove time slots if I am no longer available during certain periods so that customers don't book times when I'm unavailable.
+### Admin Capabilities:
+- Manage business owners and customer data.
+- Oversee all services listed on the platform.
 
-#### Booking Management
-- **View Upcoming Bookings:**  
-  As a business owner, I want to view a list of all upcoming bookings so that I can prepare for my scheduled appointments.
-  
-- **View Customer Details:**  
-  As a business owner, I want to see detailed information about my customers and their appointments so that I can provide personalized service.
-  
-- **Cancel/Modify Booking:**  
-  As a business owner, I want to cancel or modify a customer's booking if necessary so that I can manage any conflicts or unexpected issues.
+## Routes Overview
 
-#### Dashboard
-- **Dashboard Overview:**  
-  As a business owner, I want to view an easy-to-read dashboard with my upcoming appointments, customer details, and the total number of bookings so that I can manage my business effectively.
+### Public Routes:
+- `/auth/signup?role=Customer`: Customer registration.
+- `/auth/signup?role=Business Owner`: Business Owner registration.
+- `/auth/signin?role=Customer`: Customer signin.
+- `/auth/signin?role=Business Owner`: Business Owner signin.
 
-### Customer User Stories
 
-#### Service Browsing
-- **Browse Available Services:**  
-  As a customer, I want to browse a list of available services from different business owners so that I can find the right service for my needs.
+### Customer Routes:
+- `/services`: View all services.
+- `/services/:serviceId`: View detailed information about a service and its available timeslots.
 
-#### Appointment Booking
-- **Book Appointment:**  
-  As a customer, I want to select a service and book an available time slot so that I can secure an appointment with the business owner.
-  
-- **View Booking Details:**  
-  As a customer, I want to view my booking details after I make an appointment so that I can confirm the time, date, and service.
+### Business Owner Routes:
+- `/dashboard`: Manage services and view bookings.
+- `/services/new`: Add a new service.
+- `/services/:serviceId/edit`: Update existing service information.
+- `/services/:serviceId/delete`: Remove an existing service.
 
-#### Booking Management
-- **Reschedule Booking:**  
-  As a customer, I want to reschedule my booking if my availability changes so that I can adjust the appointment to a more suitable time.
-  
-- **Cancel Booking:**  
-  As a customer, I want to cancel my booking if I am no longer able to make the appointment so that the business owner is informed.
-  
-- **View Booking History:**  
-  As a customer, I want to view a list of all my past and upcoming bookings so that I can keep track of my appointments and services.
+## Models
 
+### User
+Represents both **Business Owners** and **Customers**.
+
+```javascript
+const userSchema = new mongoose.Schema({
+    username: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    role: { 
+        type: String, 
+        enum: ["Business Owner", "Customer"], 
+        required: true 
+    }
+});
+```
+
+
+### Service
+
+```javascript
+const serviceSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    description: { type: String, required: true },
+    price: { type: Number, required: true },
+    serviceProvider: { type: mongoose.Types.ObjectId, ref: "User", required: true },
+    timeslots: [{
+        date: { type: Date, required: true },
+        time: { type: String, required: true },
+        isBooked: { type: Boolean, default: false }
+    }],
+    image: { type: String }
+});
+```
+### Timeslot
+
+```javascript
+const timeslotsSchema = new mongoose.Schema({
+    date: { type: Date, required: true },
+    time: { type: String, required: true },
+    isBooked: { type: Boolean, default: false }
+});
+
+```
+
+## Technologies Used
+
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB, Mongoose
+- **Authentication:** Sessions with Express-Session
+- **View Engine:** EJS for templating
+- **Frontend:** HTML, CSS, JavaScript (optional for frontend interactivity)
+- **File Upload:** Multer (for image uploads)
+
+## Future Enhancements
+
+- **Payment Integration:** Add support for payments through third-party services.
+- **User Profiles:** Expand user profiles with more details and customization options.
+- **Advanced Search:** Implement advanced filtering for services based on location, price, and availability.
+- **Notifications:** Set up email or SMS notifications for booking confirmations and reminders.
