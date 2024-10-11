@@ -3,7 +3,7 @@ const app = express()
 const morgan = require("morgan")
 const mongoose = require("mongoose")
 require("dotenv/config")
-const port = process.env.PORT
+const port = process.env.PORT || 5000
 const session = require("express-session");
 const MongoStore = require('connect-mongo');
 const methodOverride = require('method-override')
